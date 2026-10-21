@@ -62,4 +62,32 @@
       }
     });
   });
+
+  // Resume PDFs are preloaded at low priority so a visitor can view one with a
+  // single tap instead of waiting for the PDF request to begin after the tap.
+  const resumeLinks = [...document.querySelectorAll('.team-resume-link')];
+  const prefetchResume = link => {
+    if (!link?.href || link.dataset.prefetched) return;
+    link.dataset.prefetched = 'true';
+    const preload = document.createElement('link');
+    preload.rel = 'prefetch';
+    preload.as = 'document';
+    preload.href = link.href;
+    document.head.append(preload);
+  };
+  const prefetchAllResumes = () => resumeLinks.forEach(prefetchResume);
+
+  resumeLinks.forEach(link => {
+    link.addEventListener('pointerenter', () => prefetchResume(link), { once: true });
+    link.addEventListener('focus', () => prefetchResume(link), { once: true });
+    link.addEventListener('touchstart', () => prefetchResume(link), { once: true, passive: true });
+  });
+
+  if (resumeLinks.length) {
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(prefetchAllResumes, { timeout: 2000 });
+    } else {
+      window.setTimeout(prefetchAllResumes, 800);
+    }
+  }
 })();
