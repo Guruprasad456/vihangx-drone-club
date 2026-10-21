@@ -1,0 +1,8 @@
+# Keep the repository focused on the static website.
+/*
+!/.gitignore
+!/*.html
+!/page-styles.css
+!/site.js
+!/assets/
+!/assets/**

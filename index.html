@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="VihangX Drone Club — a student community for building, flying and innovating with unmanned aircraft systems."
+    />
+    <title>VihangX Drone Club | Learn. Build. Fly.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --ink: #06172d;
+        --ink-2: #0b2344;
+        --blue: #087eed;
+        --blue-bright: #19a7ff;
+        --sky: #dff3ff;
+        --orange: #ff8828;
+        --orange-soft: #fff0df;
+        --paper: #f6f9fc;
+        --white: #ffffff;
+        --line: #dce6f1;
+        --muted: #62748b;
+        --green: #3ed598;
+        --radius: 18px;
+        --shadow: 0 24px 80px rgba(5, 31, 68, 0.12);
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--paper);
+        font-family: "Manrope", Arial, sans-serif;
+        overflow-x: hidden;
+      }
+      a { color: inherit; text-decoration: none; }
+      button, input, textarea { font: inherit; }
+      button { cursor: pointer; }
+      .wrap { width: min(1180px, calc(100% - 48px)); margin: 0 auto; }
+      .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+
+      .announcement {
+        background: var(--ink);
+        color: #cbdcf1;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.13em;
+        text-align: center;
+        text-transform: uppercase;
+        padding: 10px 16px;
+      }
+      .announcement span { color: var(--orange); margin: 0 8px; }
+
+      header {
+        height: 78px;
+        display: flex;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: rgba(246, 249, 252, 0.86);
+        backdrop-filter: blur(18px);
+        border-bottom: 1px solid rgba(220, 230, 241, 0.8);
+      }
+      .nav { display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+      .brand { display: flex; align-items: center; min-width: max-content; gap: 10px; }
+      .brand-logo {
+        width: 46px;
+        height: 46px;
+        border-radius: 13px;
+        background: white;
+        object-fit: cover;
+        box-shadow: 0 7px 18px rgba(12, 37, 74, 0.13);
+        border: 1px solid #e2eaf4;
+      }
+      .brand-title {
+        color: var(--ink);
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 19px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        line-height: 0.9;
+      }
+      .brand-title b { color: var(--blue); }
+      .brand-title small { display: block; margin-top: 6px; color: #789; font-family: "Manrope", sans-serif; font-size: 7px; font-weight: 800; letter-spacing: 0.15em; }
+      .links { display: flex; align-items: center; gap: 27px; color: #466079; font-size: 12px; font-weight: 800; }
+      .links a { transition: color .2s ease; }
+      .links a:hover, .links a:focus { color: var(--blue); }
+      .nav-dropdown { position: relative; }
+      .nav-dropdown > button { display: inline-flex; align-items: center; gap: 5px; border: 0; padding: 0; color: #466079; background: transparent; font: inherit; font-size: 12px; font-weight: 800; }
+      .nav-dropdown > button:hover, .nav-dropdown > button:focus { color: var(--blue); }
+      .nav-dropdown > button span { font-size: 14px; transition: transform .2s ease; }
+      .nav-dropdown.open > button span { transform: rotate(180deg); }
+      .about-menu { position: absolute; top: calc(100% + 18px); left: -17px; display: grid; min-width: 202px; padding: 8px; border: 1px solid #dbe6f1; border-radius: 12px; background: rgba(255, 255, 255, .98); box-shadow: 0 17px 36px rgba(3, 27, 62, .15); opacity: 0; pointer-events: none; transform: translateY(-5px); transition: opacity .16s ease, transform .16s ease; }
+      .nav-dropdown.open .about-menu { opacity: 1; pointer-events: auto; transform: translateY(0); }
+      .about-menu a { padding: 9px 10px; border-radius: 7px; font-size: 11px; }
+      .about-menu a:hover, .about-menu a:focus { color: var(--blue); background: #edf7ff; }
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        border: 1px solid transparent;
+        border-radius: 11px;
+        padding: 13px 18px;
+        color: white;
+        background: var(--blue);
+        box-shadow: 0 10px 22px rgba(8, 126, 237, 0.23);
+        font-size: 12px;
+        font-weight: 800;
+        line-height: 1;
+        transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+      }
+      .button:hover { background: #006ed4; box-shadow: 0 13px 26px rgba(8, 126, 237, 0.28); transform: translateY(-2px); }
+      .button--dark { background: var(--ink); box-shadow: 0 10px 22px rgba(3, 18, 40, 0.22); }
+      .button--dark:hover { background: #102a4d; }
+      .button--light { border-color: #c9d8e9; color: var(--ink); background: white; box-shadow: none; }
+      .button--light:hover { background: #eaf5ff; color: var(--blue); box-shadow: none; }
+      .button-arrow { font-size: 17px; line-height: 10px; }
+      .nav-cta { padding: 12px 15px; }
+      .menu { display: none; padding: 9px; border: 0; color: var(--ink); background: transparent; }
+      .menu svg { width: 24px; height: 24px; }
+
+      .hero { position: relative; isolation: isolate; padding: 74px 0 58px; background: var(--paper); overflow: hidden; }
+      .hero::before { content: ""; position: absolute; z-index: -1; width: 600px; height: 600px; top: -240px; left: -260px; border-radius: 50%; background: radial-gradient(circle, rgba(20, 166, 255, .18), transparent 67%); }
+      .hero::after { content: ""; position: absolute; z-index: -1; width: 570px; height: 570px; right: -200px; bottom: -180px; border: 1px solid rgba(8, 126, 237, .11); border-radius: 50%; box-shadow: 0 0 0 42px rgba(8, 126, 237, .035), 0 0 0 85px rgba(8, 126, 237, .025); }
+      .hero-grid { display: grid; grid-template-columns: 1.04fr .96fr; align-items: center; gap: 62px; }
+      .kicker { display: inline-flex; align-items: center; gap: 9px; color: var(--blue); font-size: 10px; font-weight: 800; letter-spacing: .17em; text-transform: uppercase; }
+      .kicker::before { width: 25px; height: 2px; background: var(--orange); content: ""; }
+      h1, h2, h3, p { margin-top: 0; }
+      h1 { max-width: 600px; margin: 17px 0 20px; color: var(--ink); font-family: "Space Grotesk", sans-serif; font-size: clamp(43px, 5.25vw, 70px); font-weight: 700; letter-spacing: -.058em; line-height: .99; }
+      h1 em { color: var(--blue); font-style: normal; }
+      .hero-copy { max-width: 535px; margin-bottom: 29px; color: #587087; font-size: 16px; line-height: 1.8; }
+      .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+      .hero-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 505px; margin-top: 29px; border-top: 1px solid #d8e5f0; border-bottom: 1px solid #d8e5f0; }
+      .hero-stat { position: relative; padding: 12px 15px 12px 0; }.hero-stat + .hero-stat { padding-left: 15px; }.hero-stat + .hero-stat::before { position: absolute; width: 1px; height: 28px; top: 50%; left: 0; background: #d8e5f0; content: ""; transform: translateY(-50%); }.hero-stat strong { display: block; color: #0b315c; font-family: "Space Grotesk"; font-size: 19px; line-height: 1; letter-spacing: -.04em; }.hero-stat span { display: block; margin-top: 5px; color: #71879b; font-size: 9px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+      .hero-note { display: flex; align-items: center; gap: 11px; margin-top: 29px; color: #668097; font-size: 11px; font-weight: 700; }
+      .people { display: flex; padding-left: 5px; }
+      .people i { display: grid; width: 27px; height: 27px; margin-left: -5px; place-items: center; border: 2px solid var(--paper); border-radius: 50%; color: var(--ink); background: #d7efff; font-size: 9px; font-style: normal; font-weight: 800; }
+      .people i:nth-child(2) { color: white; background: #102f5c; }.people i:nth-child(3) { color: white; background: #ff9136; }.people i:nth-child(4) { color: white; background: #0d9ddf; }
+
+      .mission-canvas { --glow-x: 74%; --glow-y: 18%; position: relative; min-height: 442px; overflow: hidden; border-radius: 26px; background: radial-gradient(circle at var(--glow-x) var(--glow-y), rgba(24, 168, 255, .52), transparent 29%), linear-gradient(135deg, #071a34 5%, #0d3263 58%, #071c3a 100%); box-shadow: 0 32px 70px rgba(3, 29, 66, .24); transition: box-shadow .35s ease; }
+      .mission-canvas:hover { box-shadow: 0 36px 83px rgba(3, 29, 66, .32), 0 0 0 1px rgba(143, 219, 255, .12); }
+      .mission-canvas::before { position: absolute; inset: 0; opacity: .42; background-image: linear-gradient(rgba(136, 207, 255, .12) 1px, transparent 1px), linear-gradient(90deg, rgba(136, 207, 255, .12) 1px, transparent 1px); background-size: 31px 31px; mask-image: linear-gradient(105deg, black, transparent 91%); content: ""; }
+      .mission-canvas::after { position: absolute; width: 400px; height: 400px; top: -172px; right: -132px; border: 1px solid rgba(160, 220, 255, .27); border-radius: 50%; box-shadow: 0 0 0 35px rgba(160, 220, 255, .06), 0 0 0 75px rgba(160, 220, 255, .035); content: ""; }
+      .mission-kicker { position: absolute; z-index: 4; top: 24px; left: 25px; display: flex; align-items: center; gap: 9px; color: #d3ecff; font-size: 10px; font-weight: 800; letter-spacing: .14em; }.mission-kicker::before { width: 8px; height: 8px; border-radius: 50%; background: #49dfa9; box-shadow: 0 0 0 5px rgba(73, 223, 169, .14); content: ""; }
+      .mission-kicker span { color: #8eb9dc; font-size: 8px; letter-spacing: .11em; }
+      .mission-route { position: absolute; z-index: 1; width: 116%; height: 106%; top: -2%; left: -8%; opacity: .94; }
+      .route-path { fill: none; stroke: #7ad9ff; stroke-width: 2; stroke-linecap: round; stroke-dasharray: 2 11; animation: routeFlow 8s linear infinite; }.route-path--warm { stroke: #ffad55; stroke-dasharray: 8 10; }.route-dot { fill: #74d9ff; filter: drop-shadow(0 0 6px #3bc8ff); }.route-dot--warm { fill: #ffae5a; filter: drop-shadow(0 0 6px #ff9e37); } @keyframes routeFlow { to { stroke-dashoffset: -120; } }
+      .mission-core { position: absolute; z-index: 2; width: 252px; height: 252px; top: 99px; left: 50%; border: 1px solid rgba(170, 226, 255, .55); border-radius: 50%; background: radial-gradient(circle at 50% 40%, rgba(67, 177, 255, .34), rgba(7, 30, 63, .06) 57%, transparent 58%); box-shadow: 0 0 0 11px rgba(66, 188, 255, .1), 0 0 0 40px rgba(66, 188, 255, .055), 0 20px 48px rgba(0, 13, 41, .26); transform: translateX(-50%); }
+      .mission-core::before, .mission-core::after { position: absolute; background: rgba(166, 224, 255, .32); content: ""; }.mission-core::before { width: 1px; height: calc(100% + 46px); top: -23px; left: 50%; }.mission-core::after { width: calc(100% + 46px); height: 1px; top: 50%; left: -23px; }
+      .hero-drone { position: absolute; z-index: 3; width: 78%; max-width: 455px; top: 139px; left: 50%; filter: drop-shadow(0 25px 18px rgba(0, 10, 30, .55)); transform: translateX(-50%); }
+      .hero-drone--render { width: 108%; max-width: 560px; top: 111px; filter: drop-shadow(0 28px 22px rgba(0, 7, 23, .6)); transition: filter .3s ease, scale .35s ease; }.mission-canvas:hover .hero-drone--render { filter: drop-shadow(0 33px 25px rgba(0, 7, 23, .7)); scale: 1.018; }
+      .hero-drone .drone-prop { transform-origin: center; animation: propSpin 1.1s linear infinite; }.hero-drone .drone-prop:nth-of-type(2) { animation-direction: reverse; } @keyframes propSpin { to { transform: rotate(360deg); } }
+      .mission-tile { position: absolute; z-index: 5; padding: 12px 13px; border: 1px solid rgba(177, 224, 255, .2); border-radius: 12px; color: #e3f4ff; background: rgba(4, 23, 52, .7); box-shadow: 0 13px 26px rgba(0, 10, 30, .23); backdrop-filter: blur(10px); }.mission-tile small { display: block; margin-bottom: 5px; color: #8bb8df; font-size: 8px; font-weight: 800; letter-spacing: .11em; }.mission-tile b { display: block; font-family: "Space Grotesk"; font-size: 13px; letter-spacing: .04em; }.mission-tile span { display: block; margin-top: 4px; color: #b5d4eb; font-size: 9px; }.mission-tile--one { top: 75px; right: 22px; }.mission-tile--two { bottom: 25px; left: 21px; }.mission-tile--two b { color: #ffb76c; }.mission-tile--three { right: 22px; bottom: 25px; }.mission-tile--three b { color: #55e1ab; }
+      .vx-mark { position: absolute; z-index: 4; right: 24px; top: 25px; color: rgba(208, 238, 255, .8); font-family: "Space Grotesk"; font-size: 13px; font-weight: 700; letter-spacing: .12em; }.vx-mark em { color: #3fb8ff; font-style: normal; }.canvas-label { position: absolute; z-index: 4; bottom: 24px; left: 50%; color: rgba(205, 235, 255, .76); font-size: 8px; font-weight: 800; letter-spacing: .16em; transform: translateX(-50%); white-space: nowrap; }
+      .mission-sweep { position: absolute; z-index: 2; width: 170%; height: 2px; top: 48%; left: -35%; opacity: .58; background: linear-gradient(90deg, transparent 0%, transparent 35%, #8be0ff 48%, rgba(139, 224, 255, .1) 57%, transparent 68%); box-shadow: 0 0 12px rgba(77, 208, 255, .9); transform: rotate(-18deg); animation: aerialScan 5.8s ease-in-out infinite; }.mission-beacon { position: absolute; z-index: 4; width: 8px; height: 8px; border-radius: 50%; background: #ffac58; box-shadow: 0 0 0 0 rgba(255, 172, 88, .55); animation: beacon 2.2s ease-out infinite; }.mission-beacon--one { top: 126px; left: 19%; }.mission-beacon--two { top: 260px; right: 18%; background: #6bdaff; box-shadow: 0 0 0 0 rgba(107, 218, 255, .5); animation-delay: 1.1s; } @keyframes aerialScan { 0%,100% { opacity: .08; transform: translateY(-94px) rotate(-18deg); } 48%,55% { opacity: .68; } 50% { transform: translateY(104px) rotate(-18deg); } } @keyframes beacon { 0% { box-shadow: 0 0 0 0 currentColor; transform: scale(.86); } 65% { box-shadow: 0 0 0 14px transparent; transform: scale(1); } 100% { box-shadow: 0 0 0 0 transparent; transform: scale(.86); } }
+
+      .ticker { color: #91a6bb; background: white; border-block: 1px solid var(--line); overflow: hidden; }
+      .ticker-track { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 72px; font-family: "Space Grotesk", sans-serif; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+      .ticker b { color: var(--blue); font-size: 17px; }.ticker .orange { color: var(--orange); }
+
+      section { scroll-margin-top: 78px; }
+      .section { padding: 100px 0; }
+      .section-head { display: grid; grid-template-columns: 1fr 390px; align-items: end; gap: 38px; margin-bottom: 38px; }
+      .section-head h2, .about-copy h2, .cta-copy h2 { margin: 12px 0 0; color: var(--ink); font-family: "Space Grotesk", sans-serif; font-size: clamp(30px, 3.5vw, 45px); letter-spacing: -.052em; line-height: 1.05; }
+      .section-head p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
+      .section-head--light h2 { color: white; }.section-head--light .kicker { color: #8fd9ff; }.section-head--light p { color: #b7cce5; }
+
+      .pale { background: #edf5fb; }
+      .program-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+      .program { min-height: 330px; padding: 25px; border: 1px solid #dce9f3; border-radius: var(--radius); background: white; box-shadow: 0 7px 17px rgba(16, 62, 106, .025); transition: transform .24s ease, box-shadow .24s ease; }
+      .program:hover { box-shadow: 0 24px 45px rgba(11, 58, 104, .12); transform: translateY(-7px); }
+      .program-top { display: flex; align-items: start; justify-content: space-between; }
+      .icon-box { display: grid; width: 52px; height: 52px; place-items: center; border-radius: 14px; color: var(--blue); background: #e2f3ff; }.program:nth-child(2) .icon-box { color: #ea771a; background: var(--orange-soft); }.program:nth-child(3) .icon-box { color: #604acb; background: #eeeaff; }
+      .icon-box svg { width: 26px; height: 26px; }
+      .number { color: #a0b3c5; font-family: "Space Grotesk"; font-size: 12px; font-weight: 700; letter-spacing: .1em; }
+      .program h3 { margin: 49px 0 12px; color: #0d2a4e; font-family: "Space Grotesk"; font-size: 22px; letter-spacing: -.035em; }.program p { margin-bottom: 22px; color: var(--muted); font-size: 12px; line-height: 1.75; }
+      .text-link { display: inline-flex; align-items: center; gap: 7px; color: var(--blue); font-size: 12px; font-weight: 800; }.text-link:hover { color: #005fae; }.text-link span { font-size: 17px; }
+
+      .about { background: white; }
+      .about-grid { display: grid; grid-template-columns: .92fr 1.08fr; align-items: center; gap: 80px; }
+      .about-display { position: relative; min-height: 405px; overflow: hidden; border-radius: 23px; background: linear-gradient(145deg, #e1f2ff, #c0ddfb); }
+      .about-display::before { position: absolute; inset: 0; opacity: .45; background: repeating-linear-gradient(90deg, rgba(255,255,255,.55) 0 1px, transparent 1px 31px), repeating-linear-gradient(0deg, rgba(255,255,255,.48) 0 1px, transparent 1px 31px); content: ""; }
+      .about-display::after { position: absolute; width: 360px; height: 360px; top: 45px; left: 50%; border: 1px solid rgba(19, 111, 195, .22); border-radius: 50%; box-shadow: 0 0 0 35px rgba(19, 111, 195, .07), 0 0 0 71px rgba(19, 111, 195, .045); content: ""; transform: translateX(-50%); }
+      .flight-path { position: absolute; z-index: 1; top: 89px; left: 34px; width: 88%; height: 192px; border-top: 3px dashed rgba(5, 126, 237, .7); border-radius: 50%; transform: rotate(-13deg); }
+      .about-drone { position: absolute; z-index: 2; width: 78%; top: 100px; left: 11%; filter: drop-shadow(0 19px 13px rgba(4,39,79,.22)); }
+      .about-badge { position: absolute; z-index: 3; bottom: 21px; left: 21px; display: flex; align-items: center; gap: 10px; padding: 12px 15px; border: 1px solid rgba(255,255,255,.75); border-radius: 11px; color: #0b3465; background: rgba(255,255,255,.88); box-shadow: 0 9px 22px rgba(18, 77, 133, .1); font-size: 11px; font-weight: 800; }.pulse { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 5px rgba(62,213,152,.17); }
+      .about-copy > p { margin: 20px 0 25px; color: var(--muted); font-size: 14px; line-height: 1.85; }
+      .features { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 17px; margin-bottom: 28px; }.feature { display: flex; align-items: center; gap: 10px; color: #274462; font-size: 12px; font-weight: 800; }.feature i { display: grid; width: 25px; height: 25px; place-items: center; border-radius: 7px; color: var(--blue); background: #e3f2ff; font-size: 13px; font-style: normal; }
+
+      .projects { position: relative; overflow: hidden; background: var(--ink); }.projects::after { position: absolute; width: 640px; height: 640px; right: -290px; top: -310px; border: 1px solid rgba(99, 190, 255, .17); border-radius: 50%; box-shadow: 0 0 0 52px rgba(99, 190, 255, .035), 0 0 0 104px rgba(99, 190, 255, .025); content: ""; }
+      .project-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+      .project-card { overflow: hidden; border: 1px solid rgba(167, 215, 255, .18); border-radius: 17px; background: rgba(21, 56, 97, .48); transition: background .2s ease, transform .2s ease; }.project-card:hover { background: rgba(31, 78, 133, .72); transform: translateY(-5px); }
+      .project-view { position: relative; height: 190px; overflow: hidden; background: linear-gradient(135deg, #195eae, #0a2c5e); }.project-card:nth-child(2) .project-view { background: linear-gradient(135deg, #0c756d, #123b68); }.project-card:nth-child(3) .project-view { background: linear-gradient(135deg, #314f9c, #0a2d66); }
+      .project-view::before { position: absolute; inset: 0; opacity: .22; background-image: radial-gradient(#c7ecff 1px, transparent 1px); background-size: 16px 16px; content: ""; }
+      .project-view .tag { position: absolute; z-index: 2; top: 14px; left: 14px; padding: 6px 8px; border: 1px solid rgba(255,255,255,.3); border-radius: 5px; color: #e1f3ff; background: rgba(2, 24, 56, .42); font-size: 8px; font-weight: 800; letter-spacing: .12em; }
+      .mini-drone { position: absolute; z-index: 1; width: 88%; top: 30px; left: 6%; filter: drop-shadow(0 12px 11px rgba(0, 11, 33, .38)); }.project-card:nth-child(2) .mini-drone { transform: rotate(-6deg); }.project-card:nth-child(3) .mini-drone { top: 36px; transform: scale(.85); }
+      .project-content { padding: 21px; }.project-content h3 { margin-bottom: 10px; color: white; font-family: "Space Grotesk"; font-size: 18px; letter-spacing: -.025em; }.project-content p { min-height: 58px; margin-bottom: 17px; color: #adc5de; font-size: 12px; line-height: 1.7; }.project-content .text-link { color: #8bdbff; }
+
+      .achievement-grid { display: grid; grid-template-columns: .95fr 1.05fr; align-items: stretch; gap: 20px; }
+      .big-number { position: relative; overflow: hidden; min-height: 331px; padding: 34px; border-radius: 19px; color: white; background: linear-gradient(145deg, #0a85ed, #075cae); }.big-number::after { position: absolute; width: 335px; height: 335px; right: -95px; bottom: -180px; border: 1px solid rgba(255,255,255,.45); border-radius: 50%; box-shadow: 0 0 0 35px rgba(255,255,255,.09), 0 0 0 73px rgba(255,255,255,.06); content: ""; }.big-number p { position: relative; z-index: 1; max-width: 305px; margin: 12px 0 0; color: #d9efff; font-size: 13px; line-height: 1.8; }.big-number strong { position: relative; z-index: 1; display: block; margin-top: 55px; font-family: "Space Grotesk"; font-size: clamp(77px, 9vw, 125px); letter-spacing: -.09em; line-height: .75; }.big-number small { position: relative; z-index: 1; display: block; margin-top: 17px; font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+      .milestones { display: grid; gap: 12px; }.milestone { display: grid; grid-template-columns: 84px 1fr auto; align-items: center; gap: 15px; min-height: 102px; padding: 18px 20px; border: 1px solid #dbe7f1; border-radius: 14px; background: white; }.milestone time { color: var(--blue); font-family: "Space Grotesk"; font-size: 14px; font-weight: 700; }.milestone h3 { margin: 0 0 5px; color: #0b2c52; font-size: 14px; }.milestone p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.5; }.milestone > span { color: #b2c3d3; font-size: 19px; }
+
+      .join { padding: 83px 0; background: #eaf4fc; }.join-panel { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 45px; overflow: hidden; padding: 47px 54px; border-radius: 22px; color: white; background: #08264c; box-shadow: var(--shadow); }.join-panel::after { position: absolute; width: 390px; height: 390px; right: -83px; top: -127px; border: 1px solid rgba(120, 204, 255, .36); border-radius: 50%; box-shadow: 0 0 0 40px rgba(120,204,255,.06), 0 0 0 81px rgba(120,204,255,.045); content: ""; }.cta-copy { position: relative; z-index: 1; }.cta-copy h2 { max-width: 570px; color: white; }.cta-copy p { max-width: 530px; margin: 14px 0 0; color: #b7cde6; font-size: 13px; line-height: 1.8; }.join-panel .button { position: relative; z-index: 1; flex: none; color: #06305d; background: white; box-shadow: none; }.join-panel .button:hover { color: white; background: var(--orange); }
+
+      .club-charter { background: #f4f8fc; }
+      .charter-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
+      .charter-card { min-height: 253px; padding: 24px; border: 1px solid #d9e7f1; border-radius: 16px; background: white; box-shadow: 0 8px 18px rgba(16, 62, 106, .025); scroll-margin-top: 100px; }
+      .charter-card:nth-child(2) { background: #0b3a70; border-color: #0b3a70; }.charter-card:nth-child(3) { background: #e9f7ff; border-color: #d5edfb; }.charter-card:nth-child(4) { background: #fff6eb; border-color: #ffe4c3; }
+      .charter-index { display: block; margin-bottom: 42px; color: var(--blue); font-family: "Space Grotesk"; font-size: 11px; font-weight: 700; letter-spacing: .12em; }.charter-card h3 { margin-bottom: 10px; color: #0c2d52; font-family: "Space Grotesk"; font-size: 21px; letter-spacing: -.035em; }.charter-card p { margin: 0; color: #63758a; font-size: 12px; line-height: 1.75; }.charter-card:nth-child(2) .charter-index { color: #8ed6ff; }.charter-card:nth-child(2) h3 { color: white; }.charter-card:nth-child(2) p { color: #c5dcf1; }
+
+      .teams { background: white; }.team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }.team-card { min-height: 292px; padding: 23px; border: 1px solid #dce7f0; border-radius: 16px; background: #fbfdff; transition: transform .2s ease, box-shadow .2s ease; }.team-card:hover { box-shadow: 0 19px 36px rgba(16, 62, 106, .11); transform: translateY(-5px); }.team-mark { display: grid; width: 45px; height: 45px; place-items: center; border-radius: 12px; color: var(--blue); background: #e2f3ff; font-size: 20px; }.team-card:nth-child(2) .team-mark { color: #df711e; background: #fff0df; }.team-card:nth-child(3) .team-mark { color: #5c50c5; background: #eeebff; }.team-card:nth-child(4) .team-mark { color: #09846d; background: #e1f8f0; }.team-card h3 { margin: 21px 0 8px; color: #0b2c52; font-family: "Space Grotesk"; font-size: 18px; letter-spacing: -.025em; }.team-lead { display: inline-block; margin-bottom: 13px; color: #47708f; font-size: 10px; font-weight: 800; }.team-card p { margin: 0; color: #62748a; font-size: 11px; line-height: 1.75; }
+
+      .gallery { background: #edf5fb; }.gallery-grid { display: grid; grid-template-columns: 1.2fr .8fr .8fr; grid-template-rows: 190px 190px; gap: 15px; }.gallery-tile { position: relative; overflow: hidden; display: flex; align-items: end; padding: 20px; border-radius: 16px; color: white; background: #0c396c; }.gallery-tile::before { position: absolute; inset: 0; opacity: .3; background-image: radial-gradient(#bde7ff 1px, transparent 1px); background-size: 15px 15px; content: ""; }.gallery-tile > * { position: relative; z-index: 1; }.gallery-tile h3 { margin: 0 0 4px; font-family: "Space Grotesk"; font-size: 20px; letter-spacing: -.035em; }.gallery-tile p { margin: 0; color: #c5e0f5; font-size: 10px; font-weight: 700; }.gallery-tile--featured { grid-row: span 2; align-items: center; justify-content: center; padding: 0; background: linear-gradient(150deg, #0b2b55, #0d76c8); }.gallery-tile--featured img { width: 73%; border-radius: 50%; box-shadow: 0 0 0 10px rgba(255,255,255,.13), 0 20px 34px rgba(0, 16, 51, .3); }.gallery-tile--featured .gallery-label { position: absolute; bottom: 20px; left: 20px; }.gallery-tile--build { background: linear-gradient(135deg, #ed7c25, #ba3e11); }.gallery-tile--field { background: linear-gradient(135deg, #196c85, #123654); }.gallery-tile--lab { background: linear-gradient(135deg, #6250b5, #293d7e); }.gallery-tile--flight { background: linear-gradient(135deg, #0b875e, #115250); }.gallery-orbit { position: absolute; width: 230px; height: 230px; right: -65px; top: -67px; border: 1px solid rgba(255,255,255,.5); border-radius: 50%; box-shadow: 0 0 0 24px rgba(255,255,255,.08), 0 0 0 47px rgba(255,255,255,.05); }.gallery-tile--build::after, .gallery-tile--field::after, .gallery-tile--lab::after, .gallery-tile--flight::after { position: absolute; top: 27px; right: 25px; color: rgba(255,255,255,.84); font-family: "Space Grotesk"; font-size: 30px; font-weight: 700; content: "✦"; }
+
+      footer { color: #b6c9df; background: #04162d; }.footer-top { display: flex; align-items: start; justify-content: space-between; gap: 30px; padding: 43px 0 31px; border-bottom: 1px solid rgba(181, 213, 245, .17); }.footer-brand { color: white; }.footer-brand .brand-title { color: white; }.footer-brand .brand-logo { border: 0; }.footer-copy { max-width: 350px; margin: 16px 0 0; font-size: 11px; line-height: 1.8; }.footer-nav { display: flex; flex-wrap: wrap; justify-content: end; gap: 13px 22px; max-width: 350px; padding-top: 11px; font-size: 11px; font-weight: 700; }.footer-nav a:hover { color: #7ed3ff; }.footer-bottom { display: flex; justify-content: space-between; gap: 18px; padding: 20px 0; color: #7591b1; font-size: 10px; }
+
+      .reveal { opacity: 0; transform: translateY(19px); transition: opacity .65s ease, transform .65s ease; }.reveal.visible { opacity: 1; transform: translateY(0); }
+      .modal { position: fixed; z-index: 50; inset: 0; display: grid; visibility: hidden; place-items: center; padding: 20px; opacity: 0; background: rgba(3, 16, 36, .64); transition: opacity .22s ease, visibility .22s ease; }.modal.open { visibility: visible; opacity: 1; }.modal-card { position: relative; width: min(500px, 100%); padding: 34px; border-radius: 20px; background: white; box-shadow: 0 28px 75px rgba(0, 13, 34, .34); transform: translateY(12px); transition: transform .22s ease; }.modal.open .modal-card { transform: translateY(0); }.modal-card h2 { margin: 8px 0 10px; color: var(--ink); font-family: "Space Grotesk"; font-size: 30px; letter-spacing: -.04em; }.modal-card p { color: var(--muted); font-size: 12px; line-height: 1.7; }.close { position: absolute; top: 14px; right: 15px; width: 31px; height: 31px; border: 0; border-radius: 8px; color: #54708d; background: #eff5fa; font-size: 20px; }.form-grid { display: grid; gap: 12px; margin-top: 21px; }.form-grid input, .form-grid textarea { width: 100%; border: 1px solid #d8e4ef; border-radius: 9px; outline: 0; padding: 12px 13px; color: var(--ink); background: #fbfdff; font-size: 12px; }.form-grid textarea { min-height: 82px; resize: vertical; }.form-grid input:focus, .form-grid textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(8,126,237,.12); }.form-grid .button { margin-top: 2px; }
+      .toast { position: fixed; z-index: 60; bottom: 22px; left: 50%; padding: 12px 16px; border-radius: 10px; color: white; background: #0a2a50; box-shadow: 0 12px 28px rgba(0,20,49,.25); font-size: 12px; font-weight: 700; opacity: 0; pointer-events: none; transform: translate(-50%, 20px); transition: .24s ease; }.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+      @media (max-width: 1050px) { .links { gap: 16px; font-size: 11px; }.nav-dropdown > button { font-size: 11px; }.nav-cta { padding: 11px 12px; }.charter-grid, .team-grid { grid-template-columns: repeat(2, 1fr); } }
+      @media (max-width: 940px) { .hero-grid { gap: 34px; }.section-head { grid-template-columns: 1fr 330px; }.about-grid { gap: 44px; }.join-panel { padding: 38px; } }
+      @media (max-width: 760px) { .wrap { width: min(100% - 32px, 540px); }.announcement { font-size: 9px; }.nav { min-height: 67px; }.brand-logo { width: 40px; height: 40px; }.brand-title { font-size: 17px; }.links { position: absolute; display: none; top: 77px; right: 16px; left: 16px; padding: 10px 16px; border: 1px solid #dce7f1; border-radius: 13px; background: white; box-shadow: 0 17px 36px rgba(3,27,62,.15); }.links.open { display: grid; }.links > a, .nav-dropdown > button { width: 100%; padding: 9px 3px; border-bottom: 1px solid #ecf1f5; text-align: left; }.nav-dropdown > button { justify-content: space-between; }.about-menu { position: static; min-width: 0; margin: 0; padding: 0 0 0 10px; border: 0; border-radius: 0; box-shadow: none; opacity: 1; pointer-events: auto; transform: none; }.about-menu a { padding: 8px 3px; color: #62809a; }.nav-dropdown.open > button span { transform: none; }.nav-cta { display: none; }.menu { display: block; }.hero { padding-top: 53px; }.hero-grid, .about-grid { grid-template-columns: 1fr; }.hero-grid { gap: 37px; }.mission-canvas { min-height: 400px; }.section { padding: 69px 0; }.section-head { grid-template-columns: 1fr; gap: 15px; margin-bottom: 28px; }.program-grid, .project-grid, .charter-grid, .team-grid { grid-template-columns: 1fr; }.program { min-height: 280px; }.program h3 { margin-top: 34px; }.about-display { min-height: 360px; }.achievement-grid { grid-template-columns: 1fr; }.big-number { min-height: 281px; }.gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 230px 160px 160px; }.gallery-tile--featured { grid-column: span 2; grid-row: auto; }.gallery-tile--featured img { width: 175px; }.join { padding: 58px 0; }.join-panel { align-items: start; flex-direction: column; gap: 25px; padding: 32px 27px; }.footer-top, .footer-bottom { flex-direction: column; }.footer-nav { justify-content: start; padding-top: 0; }.footer-bottom { gap: 7px; }.milestone { grid-template-columns: 63px 1fr auto; padding: 15px; } }
+      @media (max-width: 520px) { .hero-stats { max-width: 100%; }.hero-stat { padding-right: 9px; }.hero-stat + .hero-stat { padding-left: 9px; }.hero-stat strong { font-size: 17px; }.hero-stat span { font-size: 8px; letter-spacing: .04em; } }
+      @media (max-width: 430px) { h1 { font-size: 43px; }.hero-copy { font-size: 14px; }.mission-canvas { min-height: 347px; }.mission-core { width: 202px; height: 202px; top: 79px; }.hero-drone { width: 94%; top: 125px; }.hero-drone--render { width: 116%; top: 103px; }.mission-tile { padding: 8px 10px; }.mission-tile small { font-size: 7px; }.mission-tile b { font-size: 10px; }.mission-tile span { display: none; }.mission-tile--one { top: 54px; right: 13px; }.mission-tile--two { left: 13px; bottom: 17px; }.mission-tile--three { right: 13px; bottom: 17px; }.vx-mark { top: 23px; right: 16px; font-size: 9px; }.mission-kicker { top: 23px; left: 16px; font-size: 8px; }.mission-kicker span { display: none; }.canvas-label { bottom: 7px; font-size: 6px; }.ticker-track { gap: 12px; font-size: 9px; }.ticker-track span:nth-child(n+4) { display: none; }.features { grid-template-columns: 1fr; }.about-display { min-height: 320px; }.about-drone { top: 79px; }.about-badge { left: 14px; bottom: 14px; }.big-number strong { font-size: 95px; }.gallery-grid { grid-template-columns: 1fr; grid-template-rows: 216px repeat(4, 155px); }.gallery-tile--featured { grid-column: auto; }.gallery-tile--featured img { width: 145px; }.modal-card { padding: 28px 23px; } }
+      @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+    </style>
+  </head>
+  <body>
+    <div class="announcement">Building the next generation of aerial innovators <span>•</span> Learn · Build · Fly · Innovate</div>
+
+    <header>
+      <div class="wrap nav">
+        <a class="brand" href="#home" aria-label="VihangX Drone Club home">
+          <img class="brand-logo" src="assets/vihangx-logo.jpg" alt="VihangX Drone Club logo" />
+          <span class="brand-title">Vihang<b>X</b><small>DRONE CLUB</small></span>
+        </a>
+        <nav class="links" id="nav-links" aria-label="Main navigation">
+          <a href="index.html">Home</a>
+          <div class="nav-dropdown" id="about-dropdown">
+            <button id="about-toggle" aria-expanded="false" aria-controls="about-menu">About <span>⌄</span></button>
+            <div class="about-menu" id="about-menu" role="menu">
+              <a href="about.html" role="menuitem">About VihangX</a>
+              <a href="aim.html" role="menuitem">Aim</a>
+              <a href="vision.html" role="menuitem">Vision</a>
+              <a href="mission.html" role="menuitem">Mission</a>
+              <a href="objectives.html" role="menuitem">Objectives</a>
+            </div>
+          </div>
+          <a href="teams.html">Teams</a>
+          <a href="gallery.html">Gallery</a>
+          <a href="milestones.html">Milestones</a>
+          <a href="training.html">Training</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+        <button class="button nav-cta" data-open-modal>Join the club <span class="button-arrow">↗</span></button>
+        <button class="menu" id="menu" aria-expanded="false" aria-controls="nav-links"><span class="sr-only">Open menu</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="wrap hero-grid">
+          <div class="reveal">
+            <span class="kicker">Drone technology · Student led</span>
+            <h1>We give ambitious ideas <em>lift.</em></h1>
+            <p class="hero-copy">VihangX is a hands-on drone club where curious minds design aircraft, master flight systems and turn bold ideas into real-world aerial solutions.</p>
+            <div class="hero-actions">
+              <a class="button" href="#training">Explore the club <span class="button-arrow">→</span></a>
+              <a class="button button--light" href="#about">Meet VihangX</a>
+            </div>
+            <div class="hero-stats" aria-label="VihangX at a glance">
+              <div class="hero-stat"><strong>07</strong><span>Specialist teams</span></div>
+              <div class="hero-stat"><strong>45</strong><span>Team builders</span></div>
+              <div class="hero-stat"><strong>01</strong><span>Shared mission</span></div>
+            </div>
+            <div class="hero-note"><span class="people"><i>V</i><i>I</i><i>H</i><i>X</i></span> A community made for builders, pilots &amp; problem-solvers</div>
+          </div>
+          <div class="mission-canvas reveal" aria-label="VihangX drone mission illustration">
+            <span class="mission-kicker">MISSION CONTROL <span>LIVE ROUTE</span></span>
+            <span class="vx-mark">Vihang<em>X</em> / FLIGHT LAB</span>
+            <svg class="mission-route" viewBox="0 0 600 450" fill="none" aria-hidden="true">
+              <path class="route-path" d="M45 320C140 350 130 125 275 159S365 370 534 256" />
+              <path class="route-path route-path--warm" d="M96 125c116-78 184 22 270 4 56-12 72-67 148-41" />
+              <circle class="route-dot" cx="45" cy="320" r="5"/><circle class="route-dot" cx="534" cy="256" r="5"/>
+              <circle class="route-dot route-dot--warm" cx="96" cy="125" r="5"/><circle class="route-dot route-dot--warm" cx="514" cy="88" r="5"/>
+            </svg>
+            <span class="mission-core"></span>
+            <span class="mission-sweep"></span><span class="mission-beacon mission-beacon--one"></span><span class="mission-beacon mission-beacon--two"></span>
+            <img class="hero-drone hero-drone--render" src="assets/vihangx-hero-drone.png" alt="Modern quadcopter drone with blue and orange navigation lights" />
+            <div class="mission-tile mission-tile--one"><small>ACTIVE PROJECT</small><b>UAV / 01</b><span>Explore. Test. Improve.</span></div>
+            <div class="mission-tile mission-tile--two"><small>FLIGHT DISCIPLINE</small><b>SAFE BY DESIGN</b><span>Build with purpose</span></div>
+            <div class="mission-tile mission-tile--three"><small>TEAM STATUS</small><b>READY TO BUILD</b><span>Ideas in motion</span></div>
+            <span class="canvas-label">LEARN · BUILD · FLY · INNOVATE</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="ticker" aria-label="VihangX values"><div class="wrap ticker-track"><span><b>+</b> Learn by doing</span><span><b class="orange">✦</b> Build with purpose</span><span><b>⌁</b> Fly responsibly</span><span><b class="orange">↗</b> Innovate together</span></div></div>
+
+      <section class="section pale" id="training">
+        <div class="wrap">
+          <div class="section-head reveal"><div><span class="kicker">Training</span><h2>Skills that get you airborne.</h2></div><p>Our practical learning path covers drone technology, electronics, programming, design, flight systems, safety and innovation.</p></div>
+          <div class="program-grid">
+            <article class="program reveal"><div class="program-top"><span class="icon-box"><svg viewBox="0 0 24 24" fill="none"><path d="M3 10.5 12 5l9 5.5-9 5.5-9-5.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M7.5 13.2v3.3c0 .7 2 2.5 4.5 2.5s4.5-1.8 4.5-2.5v-3.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M21 11v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><span class="number">01 / BASICS</span></div><h3>Drone fundamentals.</h3><p>Understand what a UAV is and how propulsion, control, stability, power, sensors and flight controllers work together.</p><a href="#about" class="text-link">Start learning <span>→</span></a></article>
+            <article class="program reveal"><div class="program-top"><span class="icon-box"><svg viewBox="0 0 24 24" fill="none"><path d="M3 12h3l2-5 3 10 2-5h8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 19h16" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span><span class="number">02 / BUILD</span></div><h3>Systems &amp; assembly.</h3><p>Work with frames, motors, propellers, ESCs, batteries and control systems while developing electronics, programming and design skills.</p><a href="#teams" class="text-link">Meet the teams <span>→</span></a></article>
+            <article class="program reveal"><div class="program-top"><span class="icon-box"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3v3M4.8 5.8l2.1 2.1M3 12h3M4.8 18.2l2.1-2.1M12 21v-3M19.2 18.2l-2.1 2.1M21 12h-3M19.2 5.8l-2.1 2.1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/></svg></span><span class="number">03 / FLY</span></div><h3>Flight &amp; safety.</h3><p>Practice throttle, roll, pitch and yaw while developing responsible habits for building, operating and testing drones.</p><a href="#contact" class="text-link">Train with us <span>→</span></a></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section about" id="about">
+        <div class="wrap about-grid">
+          <div class="about-display reveal" aria-label="Illustration of a VihangX drone"><span class="flight-path"></span>
+            <svg class="about-drone" viewBox="0 0 500 280" fill="none" aria-hidden="true"><defs><linearGradient id="d-body" x1="159" y1="110" x2="340" y2="215" gradientUnits="userSpaceOnUse"><stop stop-color="#F8FCFF"/><stop offset=".55" stop-color="#B8D4ED"/><stop offset="1" stop-color="#7295B9"/></linearGradient><linearGradient id="d-arm" x1="70" y1="75" x2="430" y2="210" gradientUnits="userSpaceOnUse"><stop stop-color="#E9F6FF"/><stop offset="1" stop-color="#8DB4D5"/></linearGradient></defs><ellipse cx="250" cy="238" rx="151" ry="20" fill="#185681" opacity=".18"/><path d="m214 139-104-64-26 18 111 81Z" fill="url(#d-arm)" stroke="#618AAE" stroke-width="3"/><path d="m286 139 104-64 26 18-111 81Z" fill="url(#d-arm)" stroke="#618AAE" stroke-width="3"/><path d="m214 163-100 47-24-16 106-59Z" fill="url(#d-arm)" stroke="#618AAE" stroke-width="3"/><path d="m286 163 100 47 24-16-106-59Z" fill="url(#d-arm)" stroke="#618AAE" stroke-width="3"/><g fill="#F5FBFF" stroke="#5A87AF" stroke-width="3"><ellipse cx="85" cy="81" rx="52" ry="8" transform="rotate(-18 85 81)"/><ellipse cx="415" cy="81" rx="52" ry="8" transform="rotate(18 415 81)"/><ellipse cx="91" cy="205" rx="52" ry="8" transform="rotate(18 91 205)"/><ellipse cx="409" cy="205" rx="52" ry="8" transform="rotate(-18 409 205)"/></g><g fill="#0D3764" stroke="#B6D9F5" stroke-width="3"><circle cx="85" cy="81" r="16"/><circle cx="415" cy="81" r="16"/><circle cx="91" cy="205" r="16"/><circle cx="409" cy="205" r="16"/></g><path d="M202 127Q250 97 298 127l23 42Q250 215 179 169Z" fill="url(#d-body)" stroke="#A6C5DF" stroke-width="3"/><path d="M219 125q31-20 62 0l-9 25h-44z" fill="#2D6EB5"/><path d="M230 157h40l-7 29h-26z" fill="#082A55"/><circle cx="250" cy="170" r="11" fill="#0C74CA" stroke="#D4F4FF" stroke-width="3"/><circle cx="250" cy="170" r="4" fill="#031C3E"/><path d="m195 171-14 31m124-31 14 31" stroke="#9CBEDB" stroke-width="6" stroke-linecap="round"/><path d="M181 202h-17m155 0h17" stroke="#D8EBF8" stroke-width="6" stroke-linecap="round"/></svg>
+            <span class="about-badge"><i class="pulse"></i> Engineering in motion</span>
+          </div>
+          <div class="about-copy reveal"><span class="kicker">About VihangX</span><h2>Small drones. Big dreams.</h2><p>VihangX Drone Club is a student-led technical community at Sandipani Technical Campus, Latur. We create a practical environment where students learn, build, innovate and explore drone technology through shared experience.</p><div class="features"><span class="feature"><i>✓</i> Practical technical skills</span><span class="feature"><i>✓</i> Hands-on projects</span><span class="feature"><i>✓</i> Workshops &amp; competitions</span><span class="feature"><i>✓</i> Teamwork &amp; research</span></div><button class="button button--dark" data-open-modal>Become a member <span class="button-arrow">↗</span></button></div>
+        </div>
+      </section>
+
+      <section class="section club-charter">
+        <div class="wrap">
+          <div class="section-head reveal"><div><span class="kicker">Club charter</span><h2>Purpose with a clear direction.</h2></div><p>VihangX is built around practical learning, responsible technology and work that prepares students for real-world challenges.</p></div>
+          <div class="charter-grid">
+            <article class="charter-card reveal" id="aim"><span class="charter-index">01 / AIM</span><h3>Make practice possible.</h3><p>Provide students with practical knowledge and hands-on experience in drone technology, electronics, programming, design, safety and innovation.</p></article>
+            <article class="charter-card reveal" id="vision"><span class="charter-index">02 / VISION</span><h3>Build a capable community.</h3><p>Create a skilled, innovative and responsible student community capable of developing safe, useful, technology-driven drone solutions for real-world challenges.</p></article>
+            <article class="charter-card reveal" id="mission"><span class="charter-index">03 / MISSION</span><h3>Learn. Build. Fly.</h3><p>Create a practical learning environment that develops technical skills, teamwork, creativity and responsible practices in drone technology.</p></article>
+            <article class="charter-card reveal" id="objectives"><span class="charter-index">04 / OBJECTIVES</span><h3>Grow beyond the classroom.</h3><p>Develop technical capability, leadership, safe practices, research confidence and a portfolio of meaningful drone-based work.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section teams" id="teams">
+        <div class="wrap">
+          <div class="section-head reveal"><div><span class="kicker">Our teams</span><h2>Different disciplines. One flight path.</h2></div><p>Each group owns a vital part of the club’s work, from aircraft design and electronics to documentation, events and responsible operations.</p></div>
+          <div class="team-grid">
+            <article class="team-card reveal"><span class="team-mark">⌁</span><h3>Technical</h3><span class="team-lead">GROUP LEADER · SOHAM MASHALE</span><p>Guides technical planning, drone systems integration, testing and practical implementation.</p></article>
+            <article class="team-card reveal"><span class="team-mark">◈</span><h3>Design &amp; CAD</h3><span class="team-lead">GROUP LEADER · MANOJ RAMEGAO</span><p>Creates aircraft concepts, CAD models, component layouts and design-ready documentation.</p></article>
+            <article class="team-card reveal"><span class="team-mark">⌁</span><h3>Electronics</h3><span class="team-lead">GROUP LEADER · ASMITA HANGARGE</span><p>Works on power systems, wiring, ESCs, sensors, batteries and hardware reliability.</p></article>
+            <article class="team-card reveal"><span class="team-mark">⌘</span><h3>Programming &amp; AI</h3><span class="team-lead">GROUP LEADER · PRIYA RATHOUR</span><p>Builds software logic, drone automation, intelligent features and data-driven tools.</p></article>
+            <article class="team-card reveal"><span class="team-mark">✦</span><h3>Research &amp; Project</h3><span class="team-lead">GROUP LEADER · NAZMEEN SHAIKH</span><p>Identifies real-world problems, shapes project ideas and drives experimentation forward.</p></article>
+            <article class="team-card reveal"><span class="team-mark">▤</span><h3>Documentation &amp; Event</h3><span class="team-lead">GROUP LEADER · SANIKA MOHITE</span><p>Captures project progress and coordinates sessions, showcases, competitions and events.</p></article>
+            <article class="team-card reveal"><span class="team-mark">✓</span><h3>Safety &amp; Compliance</h3><span class="team-lead">GROUP LEADER · SANIYA JADHAV</span><p>Promotes safe, respectful and responsible practices across all club activities and flights.</p></article>
+            <article class="team-card reveal"><span class="team-mark">↗</span><h3>Club leadership</h3><span class="team-lead">PRESIDENT · NIKHIL SHENDGE</span><p>Vice-President Shagufta Patel supports club coordination and a collaborative culture for every member.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section gallery" id="gallery">
+        <div class="wrap">
+          <div class="section-head reveal"><div><span class="kicker">Gallery</span><h2>Ideas, builds and flight days.</h2></div><p>A visual space for the club’s identity, training activity, build process and future field missions.</p></div>
+          <div class="gallery-grid reveal">
+            <article class="gallery-tile gallery-tile--featured"><img src="assets/vihangx-logo.jpg" alt="VihangX Drone Club emblem" /><div class="gallery-label"><h3>VihangX</h3><p>LEARN · BUILD · FLY</p></div></article>
+            <article class="gallery-tile gallery-tile--build"><span class="gallery-orbit"></span><div><h3>Build lab</h3><p>DESIGN, ASSEMBLY &amp; TESTING</p></div></article>
+            <article class="gallery-tile gallery-tile--field"><span class="gallery-orbit"></span><div><h3>Field session</h3><p>PRE-FLIGHT &amp; OPERATIONS</p></div></article>
+            <article class="gallery-tile gallery-tile--lab"><span class="gallery-orbit"></span><div><h3>Learning lab</h3><p>ELECTRONICS &amp; PROGRAMMING</p></div></article>
+            <article class="gallery-tile gallery-tile--flight"><span class="gallery-orbit"></span><div><h3>Mission ready</h3><p>RESPONSIBLE FLIGHT</p></div></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section projects" id="projects">
+        <div class="wrap"><div class="section-head section-head--light reveal"><div><span class="kicker">From idea to aircraft</span><h2>Projects with a flight plan.</h2></div><p>Our project tracks bring together hardware, software and the confidence to test solutions beyond the classroom.</p></div>
+          <div class="project-grid">
+            <article class="project-card reveal"><div class="project-view"><span class="tag">AI &amp; VISION</span><svg class="mini-drone" viewBox="0 0 500 280" fill="none" aria-hidden="true"><path d="m214 139-104-64-26 18 111 81m91-35 104-64 26 18-111 81M214 163l-100 47-24-16 106-59m90 28 100 47 24-16-106-59" stroke="#BCE6FF" stroke-width="13" stroke-linecap="round"/><g stroke="#E8F8FF" stroke-width="5"><ellipse cx="85" cy="81" rx="52" ry="8" transform="rotate(-18 85 81)"/><ellipse cx="415" cy="81" rx="52" ry="8" transform="rotate(18 415 81)"/><ellipse cx="91" cy="205" rx="52" ry="8" transform="rotate(18 91 205)"/><ellipse cx="409" cy="205" rx="52" ry="8" transform="rotate(-18 409 205)"/></g><path d="M202 127Q250 97 298 127l23 42Q250 215 179 169Z" fill="#F2FAFF" stroke="#B5E3FF" stroke-width="4"/><path d="M230 157h40l-7 29h-26z" fill="#082A55"/><circle cx="250" cy="170" r="11" fill="#36B9FF"/></svg></div><div class="project-content"><h3>Vision-guided UAVs</h3><p>Exploring onboard cameras, object detection and smarter aerial awareness.</p><a class="text-link" href="#contact">Explore track <span>→</span></a></div></article>
+            <article class="project-card reveal"><div class="project-view"><span class="tag">AUTONOMY</span><svg class="mini-drone" viewBox="0 0 500 280" fill="none" aria-hidden="true"><path d="M55 208C126 64 194 208 251 121S376 50 455 97" stroke="#8BFFE3" stroke-width="4" stroke-dasharray="11 9"/><g transform="translate(250 100)"><path d="m-33 34-82-49m148 49 82-49m-115 49-82 39m115-39 82 39" stroke="#D6FFF5" stroke-width="12" stroke-linecap="round"/><g stroke="#FFFFFF" stroke-width="4"><ellipse cx="-116" cy="-17" rx="41" ry="7" transform="rotate(-18 -116 -17)"/><ellipse cx="116" cy="-17" rx="41" ry="7" transform="rotate(18 116 -17)"/><ellipse cx="-82" cy="75" rx="41" ry="7" transform="rotate(18 -82 75)"/><ellipse cx="82" cy="75" rx="41" ry="7" transform="rotate(-18 82 75)"/></g><path d="M-42 22Q0-7 42 22l19 36Q0 96-61 58Z" fill="#EFFFFA"/><circle cx="0" cy="57" r="10" fill="#38C9A6"/></g><circle cx="55" cy="208" r="8" fill="#fff"/><circle cx="455" cy="97" r="8" fill="#fff"/></svg></div><div class="project-content"><h3>Autonomous missions</h3><p>Learning routes, sensors and waypoint logic for purposeful flight missions.</p><a class="text-link" href="#contact">Explore track <span>→</span></a></div></article>
+            <article class="project-card reveal"><div class="project-view"><span class="tag">DATA SYSTEMS</span><svg class="mini-drone" viewBox="0 0 500 280" fill="none" aria-hidden="true"><rect x="83" y="52" width="334" height="176" rx="14" fill="#EAF6FF" opacity=".96"/><path d="M83 83h334" stroke="#9FCDF2" stroke-width="3"/><circle cx="107" cy="67" r="5" fill="#3988C8"/><circle cx="125" cy="67" r="5" fill="#3988C8"/><path d="M112 192h273M112 109v83" stroke="#ADCEF0" stroke-width="2"/><path d="m113 175 35-23 31 12 34-58 39 34 38-46 31 26 43-45" stroke="#4772E8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="374" cy="75" r="8" fill="#FF8D31"/><rect x="112" y="95" width="115" height="10" rx="5" fill="#B6D9F6"/></svg></div><div class="project-content"><h3>Flight telemetry</h3><p>Making altitude, battery and location data useful for better decisions.</p><a class="text-link" href="#contact">Explore track <span>→</span></a></div></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section pale" id="milestones">
+        <div class="wrap"><div class="section-head reveal"><div><span class="kicker">One shared flight path</span><h2>Momentum built together.</h2></div><p>VihangX is shaped through consistent practice and the willingness to attempt projects that stretch our skills.</p></div>
+          <div class="achievement-grid"><article class="big-number reveal"><span class="kicker" style="color:#cfeeff">Our outlook</span><p>Every session, prototype and test flight is another step toward a confident, capable community.</p><strong>∞</strong><small>Possibilities in the sky</small></article><div class="milestones reveal"><article class="milestone"><time>START</time><div><h3>Discover the fundamentals</h3><p>Get introduced to drones, flight safety and the creative possibilities of UAV technology.</p></div><span>↗</span></article><article class="milestone"><time>BUILD</time><div><h3>Develop your craft</h3><p>Collaborate on practical systems that connect engineering ideas with real aircraft.</p></div><span>↗</span></article><article class="milestone"><time>SOAR</time><div><h3>Share work with the world</h3><p>Take part in showcases, challenges and conversations that move aerial technology forward.</p></div><span>↗</span></article></div></div>
+        </div>
+      </section>
+
+      <section class="join" id="contact"><div class="wrap"><div class="join-panel reveal"><div class="cta-copy"><span class="kicker" style="color:#8cd6ff">Ready for takeoff?</span><h2>Bring your curiosity. We’ll help it fly.</h2><p>Whether you are a first-time builder, a future pilot or an experienced maker, there is a place for you at VihangX.</p></div><button class="button" data-open-modal>Join VihangX <span class="button-arrow">↗</span></button></div></div></section>
+    </main>
+
+    <footer><div class="wrap"><div class="footer-top"><div><a class="brand footer-brand" href="index.html"><img class="brand-logo" src="assets/vihangx-logo.jpg" alt="VihangX Drone Club logo" /><span class="brand-title">Vihang<b>X</b><small>DRONE CLUB</small></span></a><p class="footer-copy">A student-driven community for learning, building and innovating with drones.</p></div><nav class="footer-nav" aria-label="Footer navigation"><a href="about.html">About VihangX</a><a href="teams.html">Teams</a><a href="gallery.html">Gallery</a><a href="training.html">Training</a><a href="contact.html">Join VihangX</a></nav></div><div class="footer-bottom"><span>© <span id="year"></span> VihangX Drone Club. All rights reserved.</span><span>Learn <b style="color:#52bcff">•</b> Build <b style="color:#ff9a45">•</b> Fly <b style="color:#52bcff">•</b> Innovate</span></div></div></footer>
+
+    <div class="modal" id="join-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-card"><button class="close" data-close-modal aria-label="Close dialog">×</button><span class="kicker">VihangX membership</span><h2 id="modal-title">Start your flight path.</h2><p>Tell us a little about yourself. This demo form will show a confirmation without sending data.</p><form class="form-grid" id="join-form"><label class="sr-only" for="name">Name</label><input id="name" name="name" required placeholder="Your name" /><label class="sr-only" for="email">Email</label><input id="email" name="email" type="email" required placeholder="Email address" /><label class="sr-only" for="interest">What interests you?</label><textarea id="interest" name="interest" placeholder="What would you like to learn or build?"></textarea><button class="button" type="submit">Send interest <span class="button-arrow">→</span></button></form></div></div>
+    <div class="toast" id="toast" role="status">Thanks — your interest has been recorded.</div>
+
+    <script>
+      const menu = document.getElementById('menu');
+      const navLinks = document.getElementById('nav-links');
+      const aboutDropdown = document.getElementById('about-dropdown');
+      const aboutToggle = document.getElementById('about-toggle');
+      const modal = document.getElementById('join-modal');
+      const openButtons = document.querySelectorAll('[data-open-modal]');
+      const closeButton = document.querySelector('[data-close-modal]');
+      const toast = document.getElementById('toast');
+
+      menu.addEventListener('click', () => {
+        const open = navLinks.classList.toggle('open');
+        menu.setAttribute('aria-expanded', open);
+      });
+      navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+        navLinks.classList.remove('open'); menu.setAttribute('aria-expanded', 'false');
+      }));
+      aboutToggle.addEventListener('click', () => {
+        const open = aboutDropdown.classList.toggle('open');
+        aboutToggle.setAttribute('aria-expanded', String(open));
+      });
+      document.addEventListener('click', event => {
+        if (!aboutDropdown.contains(event.target)) {
+          aboutDropdown.classList.remove('open'); aboutToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+      const openModal = () => { modal.classList.add('open'); document.getElementById('name').focus(); };
+      const closeModal = () => modal.classList.remove('open');
+      openButtons.forEach(button => button.addEventListener('click', openModal));
+      closeButton.addEventListener('click', closeModal);
+      modal.addEventListener('click', event => { if (event.target === modal) closeModal(); });
+      document.addEventListener('keydown', event => { if (event.key === 'Escape') closeModal(); });
+      document.getElementById('join-form').addEventListener('submit', event => {
+        event.preventDefault(); closeModal(); event.target.reset();
+        toast.classList.add('show'); window.setTimeout(() => toast.classList.remove('show'), 3600);
+      });
+      const missionCanvas = document.querySelector('.mission-canvas');
+      const missionDrone = document.querySelector('.hero-drone--render');
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (missionCanvas && missionDrone && !reducedMotion && window.matchMedia('(pointer: fine)').matches) {
+        missionCanvas.addEventListener('pointermove', event => {
+          const bounds = missionCanvas.getBoundingClientRect();
+          const x = (event.clientX - bounds.left) / bounds.width;
+          const y = (event.clientY - bounds.top) / bounds.height;
+          missionCanvas.style.setProperty('--glow-x', `${Math.round(x * 100)}%`);
+          missionCanvas.style.setProperty('--glow-y', `${Math.round(y * 100)}%`);
+          missionDrone.style.transform = `translate(calc(-50% + ${(x - .5) * 10}px), ${(y - .5) * 8}px)`;
+        });
+        missionCanvas.addEventListener('pointerleave', () => {
+          missionCanvas.style.setProperty('--glow-x', '74%');
+          missionCanvas.style.setProperty('--glow-y', '18%');
+          missionDrone.style.transform = 'translateX(-50%)';
+        });
+      }
+      const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+      }), { threshold: .12 });
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
