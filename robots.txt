@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://guruprasad456.github.io/vihangx-drone-club/sitemap.xml
+Sitemap: https://guru-4d663.web.app/sitemap.xml
