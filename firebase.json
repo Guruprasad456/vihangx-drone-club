@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "vihangxdroneclubstc",
     "public": ".",
     "ignore": [
       "firebase.json",
